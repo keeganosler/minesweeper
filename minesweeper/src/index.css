@@ -8,6 +8,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body,html{
+    height:100%;
+}
+
+
 *,
 *:before,
 *:after {
@@ -23,25 +28,26 @@ body {
 
 .nav{
     background-color:darkgray;
-    overflow:hidden;
     text-align:center;
+    max-width:400px;
+    height:50px;
 }
 
-.nav a{
+a{
     float:center;
     display:block;
     padding: 4px 0 0 4px;
     text-decoration:none;
     font-size:30px;
-    color:black;
+    color:cadetblue;
 }
 
 .icon{
-    background-color:darkgray;
+    background-color:black;
     border:none;
-    color:white;
+    color:cadetblue;
     font-size:30px;
-}nom 
+}
 
 .clear {
   clear: both;
@@ -54,6 +60,15 @@ body {
   padding: 20px;
 }
 
+.my-info {
+    margin-bottom: 20px;
+    background-color:black;
+    padding: 7px;
+    text-align: center;
+    color: black;
+    min-height: 40px;
+    border-radius: 7px;
+  }
 
 .game-info {
     margin-bottom: 20px;

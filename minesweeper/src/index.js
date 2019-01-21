@@ -6,7 +6,6 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
-// Cell Class
 class Cell extends React.Component {
   getValue() {
     const {value} = this.props;
@@ -333,6 +332,10 @@ class Board extends React.Component {
   render() {
         return (
             <div className="board">
+                <div className="my-info">
+                    <button class="icon"><a href="https://github.com/keeganosler"><i class="fa fa-github-square"></i></a></button>
+                    <button class="icon"><a href="https://www.linkedin.com/in/keegan-osler-63a559177"><i class="fa fa-linkedin-square"></i></a></button>
+                </div>
                 <div className="game-info">
                     <span className="info">Mines remaining: {this.state.mineCount}</span>
                     <h1 className="info">{this.state.gameStatus}</h1>
