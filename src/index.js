@@ -10,10 +10,10 @@ class Cell extends React.Component {
     
   getValue() {
     const {value} = this.props;
-    if (!value.isRevealed) {
+    if (!value.isShown) {
       return this.props.value.isFlagged ? "🚩" : null;
     }
-    if (value.isMine) {
+    if (value.isaMine) {
       return "💣";
     }
     if (value.neighbour === 0) {
@@ -26,8 +26,8 @@ class Cell extends React.Component {
     const {value, onClick, cMenu} = this.props;
     let className =
       "cell" +
-      (value.isRevealed ? "" : " hidden") +
-      (value.isMine ? " is-mine" : "") +
+      (value.isShown ? "" : " hidden") +
+      (value.isaMine ? " is-mine" : "") +
       (value.isFlagged ? " is-flag" : "");
 
     return (
@@ -56,7 +56,7 @@ class Board extends React.Component {
 
         data.map(datarow => {
             datarow.map((dataitem) => {
-                if (dataitem.isMine) {
+                if (dataitem.isaMine) {
                     mineArray.push(dataitem);
                 }
             });
@@ -86,7 +86,7 @@ class Board extends React.Component {
 
         data.map(datarow => {
             datarow.map((dataitem) => {
-                if (!dataitem.isRevealed) {
+                if (!dataitem.isShown) {
                     mineArray.push(dataitem);
                 }
             });
@@ -117,9 +117,9 @@ class Board extends React.Component {
                 data[i][j] = {
                     x: i,
                     y: j,
-                    isMine: false,
+                    isaMine: false,
                     neighbour: 0,
-                    isRevealed: false,
+                    isShown: false,
                     isEmpty: false,
                     isFlagged: false,
                 };
@@ -135,8 +135,8 @@ class Board extends React.Component {
         while (minesPlanted < mines) {
             randomx = this.getRandomNumber(width);
             randomy = this.getRandomNumber(height);
-            if (!(data[randomx][randomy].isMine)) {
-                data[randomx][randomy].isMine = true;
+            if (!(data[randomx][randomy].isaMine)) {
+                data[randomx][randomy].isaMine = true;
                 minesPlanted++;
             }
         }
@@ -150,11 +150,11 @@ class Board extends React.Component {
 
         for (let i = 0; i < height; i++) {
             for (let j = 0; j < width; j++) {
-                if (data[i][j].isMine !== true) {
+                if (data[i][j].isaMine !== true) {
                     let mine = 0;
                     const area = this.traverseBoard(data[i][j].x, data[i][j].y, data);
                     area.map(value => {
-                        if (value.isMine) {
+                        if (value.isaMine) {
                             mine++;
                         }
                     });
@@ -221,7 +221,7 @@ class Board extends React.Component {
         let updatedData = this.state.boardData;
         updatedData.map((datarow) => {
             datarow.map((dataitem) => {
-                dataitem.isRevealed = true;
+                dataitem.isShown = true;
             });
         });
         this.setState({
@@ -233,8 +233,8 @@ class Board extends React.Component {
     revealEmpty(x, y, data) {
         let area = this.traverseBoard(x, y, data);
         area.map(value => {
-            if (!value.isFlagged && !value.isRevealed && (value.isEmpty || !value.isMine)) {
-                data[value.x][value.y].isRevealed = true;
+            if (!value.isFlagged && !value.isShown && (value.isEmpty || !value.isaMine)) {
+                data[value.x][value.y].isShown = true;
                 if (value.isEmpty) {
                     this.revealEmpty(value.x, value.y, data);
                 }
@@ -249,10 +249,10 @@ class Board extends React.Component {
     _handleCellClick(x, y) {
 
         // check if revealed. return if true.
-        if (this.state.boardData[x][y].isRevealed || this.state.boardData[x][y].isFlagged) return null;
+        if (this.state.boardData[x][y].isShown || this.state.boardData[x][y].isFlagged) return null;
 
         // check if mine. game over if true
-        if (this.state.boardData[x][y].isMine) {
+        if (this.state.boardData[x][y].isaMine) {
             this.setState({gameStatus: "You Lost."});
             this.revealBoard();
             alert("game over");
@@ -260,7 +260,7 @@ class Board extends React.Component {
 
         let updatedData = this.state.boardData;
         updatedData[x][y].isFlagged = false;
-        updatedData[x][y].isRevealed = true;
+        updatedData[x][y].isShown = true;
 
         if (updatedData[x][y].isEmpty) {
             updatedData = this.revealEmpty(x, y, updatedData);
@@ -284,7 +284,7 @@ class Board extends React.Component {
         let mines = this.state.mineCount;
 
         // check if already revealed
-        if (updatedData[x][y].isRevealed) return;
+        if (updatedData[x][y].isShown) return;
 
         if (updatedData[x][y].isFlagged) {
             updatedData[x][y].isFlagged = false;
